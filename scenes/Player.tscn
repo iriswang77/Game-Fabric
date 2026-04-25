@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://cplayrtscn001"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_playerHit"]
+size = Vector2(100, 70)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_playerBody"]
+bg_color = Color(0.85, 0.15, 0.1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.04, 0.04, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_playerTitle"]
+bg_color = Color(0.6, 0.05, 0.05, 1)
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_player")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("RectShape_playerHit")
+
+[node name="WindowBody" type="Panel" parent="."]
+position = Vector2(-50, -35)
+size = Vector2(100, 70)
+theme_override_styles/panel = SubResource("StyleFlat_playerBody")
+mouse_filter = 2
+
+[node name="TitleBar" type="Panel" parent="WindowBody"]
+position = Vector2(0, 0)
+size = Vector2(100, 18)
+theme_override_styles/panel = SubResource("StyleFlat_playerTitle")
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="WindowBody/TitleBar"]
+position = Vector2(3, 2)
+size = Vector2(78, 14)
+text = "UNAUTHORIZED_ACCESS.exe"
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(1, 0.88, 0.88, 1)
+
+[node name="CloseLabel" type="Label" parent="WindowBody/TitleBar"]
+position = Vector2(82, 2)
+size = Vector2(15, 14)
+text = "[x]"
+theme_override_font_sizes/font_size = 8
+theme_override_colors/font_color = Color(1, 1, 0.6, 1)
+
+[node name="BodyContent" type="Label" parent="WindowBody"]
+position = Vector2(5, 22)
+size = Vector2(90, 44)
+text = "[PROCESS ACTIVE]"
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+autowrap_mode = 3

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccursrtscn001"]
+
+[ext_resource type="Script" path="res://scripts/Cursor.gd" id="1_cursor"]
+
+[node name="Cursor" type="Node2D"]
+visible = false
+script = ExtResource("1_cursor")
+
+[node name="Sprite" type="ColorRect" parent="."]
+position = Vector2(-6, -10)
+size = Vector2(12, 20)
+color = Color(0.04, 0.04, 0.04, 0.92)
+mouse_filter = 2
+
+[node name="ActivationTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = false
