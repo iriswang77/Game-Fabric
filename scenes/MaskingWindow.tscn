@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmasktscn0001"]
+
+[ext_resource type="Script" path="res://scripts/MaskingWindow.gd" id="1_mask"]
+[ext_resource type="PackedScene" uid="uid://cdoctscn00001" path="res://scenes/Document.tscn" id="2_doc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_maskBody"]
+bg_color = Color(0.82, 0.82, 0.82, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_maskTitle"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="MaskingWindow" type="Node2D"]
+script = ExtResource("1_mask")
+
+[node name="WindowBody" type="Panel" parent="."]
+position = Vector2(-65, -50)
+size = Vector2(130, 100)
+theme_override_styles/panel = SubResource("StyleFlat_maskBody")
+mouse_filter = 2
+
+[node name="TitleBar" type="Panel" parent="WindowBody"]
+position = Vector2(0, 0)
+size = Vector2(130, 18)
+theme_override_styles/panel = SubResource("StyleFlat_maskTitle")
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="WindowBody/TitleBar"]
+position = Vector2(3, 2)
+size = Vector2(114, 14)
+text = "OFFICIAL_PROPAGANDA.exe"
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="ContentLabel" type="Label" parent="WindowBody"]
+position = Vector2(5, 22)
+size = Vector2(120, 74)
+text = "CITIZENS ARE HAPPY\nGOVERNMENT IS GOOD\nNO SECRETS HERE\n[NOTHING TO SEE]"
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.15, 0.15, 0.6, 1)
+autowrap_mode = 3
+
+[node name="HiddenDocument" parent="." instance=ExtResource("2_doc")]
+visible = false

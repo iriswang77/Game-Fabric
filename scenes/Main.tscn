@@ -1,0 +1,246 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmaintscn0001"]
+
+[ext_resource type="Script"      path="res://scripts/Main.gd"             id="1_main"]
+[ext_resource type="PackedScene" uid="uid://cplayrtscn001" path="res://scenes/Player.tscn"        id="2_player"]
+[ext_resource type="PackedScene" uid="uid://cenemytscn001" path="res://scenes/Enemy.tscn"         id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://cmasktscn0001" path="res://scenes/MaskingWindow.tscn" id="4_mask"]
+[ext_resource type="PackedScene" uid="uid://cdoctscn00001" path="res://scenes/Document.tscn"      id="5_doc"]
+[ext_resource type="PackedScene" uid="uid://ccursrtscn001" path="res://scenes/Cursor.tscn"        id="6_cursor"]
+[ext_resource type="Shader"      path="res://shaders/wobbly_screen.gdshader"                      id="7_shader"]
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_darkPanel"]
+bg_color = Color(0.05, 0.05, 0.1, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.75, 0.1, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_endPanel"]
+bg_color = Color(0.04, 0.04, 0.12, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.25, 0.55, 1.0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMat_screen"]
+shader = ExtResource("7_shader")
+shader_parameter/wobble_strength = 0.004
+shader_parameter/wobble_speed = 2.0
+shader_parameter/scanline_intensity = 0.07
+shader_parameter/vignette_strength = 0.25
+shader_parameter/chroma_aberration = 0.002
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+; ── Webpage background ────────────────────────────────────────────────────────
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -10
+position = Vector2(0, 0)
+size = Vector2(1280, 720)
+color = Color(0.91, 0.91, 0.89, 1)
+mouse_filter = 2
+
+[node name="BrowserBar" type="ColorRect" parent="Background"]
+position = Vector2(0, 0)
+size = Vector2(1280, 28)
+color = Color(0.76, 0.76, 0.76, 1)
+mouse_filter = 2
+
+[node name="BackBtn" type="Label" parent="Background/BrowserBar"]
+position = Vector2(6, 6)
+size = Vector2(30, 16)
+text = "← →"
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="URLBar" type="Label" parent="Background/BrowserBar"]
+position = Vector2(52, 6)
+size = Vector2(1130, 16)
+text = "http://gov-secure.state.net/citizens/official-information.html  ✓ ENCRYPTED"
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.12, 0.12, 0.12, 1)
+
+[node name="PageTitle" type="Label" parent="Background"]
+position = Vector2(30, 40)
+size = Vector2(800, 24)
+text = "GOVERNMENT OFFICIAL PORTAL — CITIZENS INFORMATION BUREAU"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.08, 0.08, 0.5, 1)
+
+[node name="PageSubtitle" type="Label" parent="Background"]
+position = Vector2(30, 66)
+size = Vector2(700, 18)
+text = "All information on this portal is approved and verified. There is nothing to hide."
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="PageRule" type="ColorRect" parent="Background"]
+position = Vector2(0, 88)
+size = Vector2(1280, 2)
+color = Color(0.6, 0.6, 0.6, 1)
+mouse_filter = 2
+
+[node name="FooterText" type="Label" parent="Background"]
+position = Vector2(30, 690)
+size = Vector2(900, 16)
+text = "© STATE INFORMATION BUREAU — Unauthorised access is a criminal offence. You are being monitored."
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.35, 0.35, 0.35, 1)
+
+; ── Gameplay nodes ────────────────────────────────────────────────────────────
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(640, 380)
+
+[node name="Enemy1" parent="." instance=ExtResource("3_enemy")]
+position = Vector2(200, 320)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_enemy")]
+position = Vector2(1050, 420)
+
+[node name="MaskingWindow1" parent="." instance=ExtResource("4_mask")]
+position = Vector2(370, 460)
+
+[node name="MaskingWindow2" parent="." instance=ExtResource("4_mask")]
+position = Vector2(800, 490)
+
+[node name="Document1" parent="." instance=ExtResource("5_doc")]
+position = Vector2(640, 200)
+
+[node name="Cursor" parent="." instance=ExtResource("6_cursor")]
+
+; ── HUD (CanvasLayer, layer 10) ───────────────────────────────────────────────
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HUDBar" type="ColorRect" parent="HUD"]
+position = Vector2(0, 0)
+size = Vector2(1280, 28)
+color = Color(0.08, 0.08, 0.08, 0.75)
+mouse_filter = 2
+
+[node name="GazeLabel" type="Label" parent="HUD"]
+position = Vector2(8, 6)
+size = Vector2(52, 16)
+text = "GAZE:"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1.0, 0.7, 0.0, 1)
+
+[node name="GazeBar" type="ProgressBar" parent="HUD"]
+position = Vector2(64, 7)
+size = Vector2(180, 14)
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="IntegrityLabel" type="Label" parent="HUD"]
+position = Vector2(258, 6)
+size = Vector2(72, 16)
+text = "INTEGRITY:"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.3, 1.0, 0.3, 1)
+
+[node name="IntegrityBar" type="ProgressBar" parent="HUD"]
+position = Vector2(335, 7)
+size = Vector2(180, 14)
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="IntelLabel" type="Label" parent="HUD"]
+position = Vector2(1040, 6)
+size = Vector2(230, 16)
+text = "Intel: 0 / 3"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.8, 0.8, 1.0, 1)
+
+[node name="HintLabel" type="Label" parent="HUD"]
+position = Vector2(535, 6)
+size = Vector2(210, 16)
+text = "Drag the red window to move."
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+
+; ── Game Over overlay ─────────────────────────────────────────────────────────
+
+[node name="GameOverScreen" type="Panel" parent="HUD"]
+position = Vector2(440, 260)
+size = Vector2(400, 200)
+theme_override_styles/panel = SubResource("StyleFlat_darkPanel")
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="HUD/GameOverScreen"]
+position = Vector2(20, 18)
+size = Vector2(360, 164)
+
+[node name="GameOverLabel" type="Label" parent="HUD/GameOverScreen/VBox"]
+size_flags_horizontal = 3
+text = "GARBAGE COLLECTION\n\nProcess terminated.\nYou have been deleted."
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.9, 0.25, 0.25, 1)
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="RestartBtn" type="Button" parent="HUD/GameOverScreen/VBox"]
+size_flags_horizontal = 3
+text = "↺  RESTART PROCESS"
+theme_override_font_sizes/font_size = 13
+
+; ── Ending overlay ────────────────────────────────────────────────────────────
+
+[node name="EndingScreen" type="Panel" parent="HUD"]
+position = Vector2(290, 130)
+size = Vector2(700, 460)
+theme_override_styles/panel = SubResource("StyleFlat_endPanel")
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="HUD/EndingScreen"]
+position = Vector2(30, 22)
+size = Vector2(640, 416)
+
+[node name="EndingLabel" type="Label" parent="HUD/EndingScreen/VBox"]
+custom_minimum_size = Vector2(640, 200)
+size_flags_horizontal = 3
+text = ""
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.9, 0.95, 1.0, 1)
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="HUD/EndingScreen/VBox"]
+size_flags_horizontal = 3
+visible = false
+
+[node name="UploadBtn" type="Button" parent="HUD/EndingScreen/VBox/ChoiceContainer"]
+size_flags_horizontal = 3
+text = "[ UPLOAD  —  Send intel to handler. Mission success. ]"
+theme_override_font_sizes/font_size = 12
+
+[node name="LeakBtn" type="Button" parent="HUD/EndingScreen/VBox/ChoiceContainer"]
+size_flags_horizontal = 3
+text = "[ LEAK    —  Release intel to the public. ]"
+theme_override_font_sizes/font_size = 12
+
+[node name="DeleteBtn" type="Button" parent="HUD/EndingScreen/VBox/ChoiceContainer"]
+size_flags_horizontal = 3
+text = "[ DELETE  —  Erase all intel. Leave no trace. ]"
+theme_override_font_sizes/font_size = 12
+
+; ── Post-process shader overlay (CanvasLayer, layer 100) ──────────────────────
+
+[node name="ShaderOverlay" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="ScreenEffect" type="ColorRect" parent="ShaderOverlay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 1)
+material = SubResource("ShaderMat_screen")
+mouse_filter = 2

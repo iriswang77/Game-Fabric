@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://cenemytscn001"]
+
+[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_enemy"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_enemyBody"]
+size = Vector2(110, 75)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_enemyBody"]
+bg_color = Color(0.1, 0.18, 0.85, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.04, 0.08, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_enemyTitle"]
+bg_color = Color(0.05, 0.1, 0.65, 1)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectShape_enemyBody")
+
+[node name="WindowBody" type="Panel" parent="."]
+position = Vector2(-55, -37)
+size = Vector2(110, 75)
+theme_override_styles/panel = SubResource("StyleFlat_enemyBody")
+mouse_filter = 2
+
+[node name="TitleBar" type="Panel" parent="WindowBody"]
+position = Vector2(0, 0)
+size = Vector2(110, 18)
+theme_override_styles/panel = SubResource("StyleFlat_enemyTitle")
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="WindowBody/TitleBar"]
+position = Vector2(3, 2)
+size = Vector2(95, 14)
+text = "SECURITY_MONITOR.exe"
+theme_override_font_sizes/font_size = 7
+theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
+
+[node name="StatusLabel" type="Label" parent="WindowBody"]
+position = Vector2(5, 22)
+size = Vector2(100, 50)
+text = "[SCANNING...]"
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+autowrap_mode = 3
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 1.0
+one_shot = false
+autostart = false

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdoctscn00001"]
+
+[ext_resource type="Script" path="res://scripts/Document.gd" id="1_doc"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_doc"]
+size = Vector2(50, 60)
+
+[sub_resource type="StyleBoxFlat" id="StyleFlat_docSprite"]
+bg_color = Color(0.97, 0.93, 0.35, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.55, 0.1, 1)
+
+[node name="Document" type="Area2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_doc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectShape_doc")
+
+[node name="Sprite" type="Panel" parent="."]
+position = Vector2(-25, -30)
+size = Vector2(50, 60)
+theme_override_styles/panel = SubResource("StyleFlat_docSprite")
+mouse_filter = 2
+
+[node name="DocLabel" type="Label" parent="Sprite"]
+position = Vector2(3, 4)
+size = Vector2(44, 52)
+text = "CLASSIFIED\n\n★ TOP\n  SECRET\n★"
+theme_override_font_sizes/font_size = 8
+theme_override_colors/font_color = Color(0.35, 0.18, 0.0, 1)
+horizontal_alignment = 1
+autowrap_mode = 3
